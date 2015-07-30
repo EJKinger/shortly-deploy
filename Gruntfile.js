@@ -128,21 +128,24 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-  ]);
-
-  grunt.registerTask('upload', ['shell']);
-
-  grunt.registerTask('deploy', [
     'jshint',
     'mochaTest',
     'concat',
     'uglify',
     'cssmin' ]);
+
+  grunt.registerTask('upload', ['shell']);
+
+  grunt.registerTask('deploy', function(){
+    grunt.task.run(['build']);
+
     if(grunt.option('prod')) {
       grunt.task.run(['upload']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
+  });
+    
 };
 
 
