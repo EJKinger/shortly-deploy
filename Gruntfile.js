@@ -44,15 +44,15 @@ module.exports = function(grunt) {
           'public/dist/lib-<%= pkg.version %>.min.js': ['public/dist/lib-<%= pkg.version %>.js']
         }
       }
-
     },
 
     jshint: {
-      files: [
+      files: {
+        src: ['app/**/*.js', 'lib/**/*.js', 'public/client/*.js', 'server-config.js', 'server.js']
         // Add filespec list here
-      ],
+      },
       options: {
-        force: 'true',
+        //force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
@@ -92,6 +92,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push azure master'
       }
     },
   });
@@ -129,17 +130,40 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
   ]);
 
-  grunt.registerTask('upload', function(n) {
+  grunt.registerTask('upload', ['shell']);
+
+  grunt.registerTask('deploy', [
+    'jshint',
+    'mochaTest',
+    'concat',
+    'uglify',
+    'cssmin' ]);
     if(grunt.option('prod')) {
-      // add your production server task here
+      grunt.task.run(['upload']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
-  });
-
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
-
-
 };
+
+
+// function(){
+//   grunt.task.run([ 'server-dev']);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
