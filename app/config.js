@@ -1,4 +1,4 @@
-var Bookshelf = require('bookshelf');
+/*var Bookshelf = require('bookshelf');
 var path = require('path');
 
 var db = Bookshelf.initialize({
@@ -42,4 +42,43 @@ db.knex.schema.hasTable('users').then(function(exists) {
   }
 });
 
+module.exports = db;*/
+
+var mongoose = require('mongoose');
+//mongoose.connect('mongodb://localhost/shortly-deploy');
+mongoose.connect('mongodb://127.0.0.1:27017/test');
+
+var db = mongoose.connection;
+
 module.exports = db;
+
+db.on('error', console.error.bind(console, 'connection error'));
+
+db.once('open', function(){
+  console.log('Mongoose DB running');
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
